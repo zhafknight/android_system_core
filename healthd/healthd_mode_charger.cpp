@@ -528,6 +528,11 @@ void Charger::ProcessKey(int code, int64_t now) {
                 RequestDisableSuspend();
             }
         }
+    } else {
+        if (key->pending) {
+            kick_animation(&batt_anim_);
+            RequestDisableSuspend();
+        }
     }
 
     key->pending = false;
@@ -549,6 +554,7 @@ void Charger::ProcessHallSensor(int code) {
 
 void Charger::HandleInputState(int64_t now) {
     ProcessKey(KEY_POWER, now);
+    ProcessKey(KEY_HOME, now);
 
     if (next_key_check_ != -1 && now > next_key_check_) next_key_check_ = -1;
 
