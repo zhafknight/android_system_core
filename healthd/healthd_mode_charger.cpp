@@ -325,12 +325,6 @@ void Charger::UpdateScreenState(int64_t now) {
         healthd_draw_ = HealthdDraw::Create(&batt_anim_);
         if (healthd_draw_ == nullptr) return;
 
-#if !defined(__ANDROID_VNDK__)
-        if (android::sysprop::ChargerProperties::disable_init_blank().value_or(false)) {
-            healthd_draw_->blank_screen(true, static_cast<int>(drm_));
-            screen_blanked_ = true;
-        }
-#endif
     }
 
     /* animation is over, blank screen and leave */
